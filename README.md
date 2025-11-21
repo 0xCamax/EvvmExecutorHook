@@ -1,66 +1,54 @@
-## Foundry
+# Mycelium Hook Contract
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Overview
 
-Foundry consists of:
+The Mycelium Hook Contract is a Uniswap V4 hook that intercepts swap transactions and channels their economic flow to power EVVM execution. Instead of creating artificial incentives, it leverages the natural and predictable behavior of arbitrage bots to sustain a virtual execution environment without burdening end users with gas costs.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Purpose
 
-## Documentation
+This hook enables arbitrage bots to sponsor EVVM execution as a condition of accessing arbitrage opportunities. By integrating virtual execution into the swap process that bots were already going to perform, the system becomes self-sustaining through market incentives rather than external dependencies.
 
-https://book.getfoundry.sh/
+## Key Responsibilities
 
-## Usage
+### 1. Execution Trigger
+- Intercepts each swap executed by an arbitrage bot
+- Triggers EVVM virtual transaction execution prior to the swap completion
+- Ensures deterministic state transitions before swap settlement
 
-### Build
+### 2. State Management
+- Preserves the integrity and determinism of the EVVM core
 
-```shell
-$ forge build
-```
+### 3. Reward Distribution
+- Allocates base fees to LP positions for sustaining the execution flow
+- Assigns priority fees to arbitrage bots as direct incentive for EVVM sponsorship
+- Ensures users enjoy gasless interactions without additional relayers
 
-### Test
+### 4. Economic Integration
+- Couples EVVM execution directly to real economic flow in the AMM
+- Transforms each swap into a contribution to the execution network
+- Creates a sustainable model where market volume fuels computational capacity
 
-```shell
-$ forge test
-```
+## Integration Points
 
-### Format
+### With Uniswap V4
+- Registers as a hook on specified token pairs
+- Operates within the Uniswap hook lifecycle (beforeSwap, afterSwap, etc.)
+- Maintains compatibility with Uniswap's liquidity and fee mechanisms
 
-```shell
-$ forge fmt
-```
+### With EVVM Core
+- Calls EVVM execution functions to process virtual transactions
+- Integrates Fisher logic directly into the arbitrage flow
 
-### Gas Snapshots
+### With Arbitrage Bots
+- Provides incentive structure through priority fees
+- Couples execution sponsorship to swap execution
 
-```shell
-$ forge snapshot
-```
+## Design Principles
 
-### Anvil
+**Alignment**: Every participant benefits—LPs receive rewards, bots improve margins, users pay no gas.
 
-```shell
-$ anvil
-```
+**Sustainability**: The system is powered by inevitable market activity, not artificial incentives.
 
-### Deploy
+**Simplicity**: No additional complexity for end users; the process is transparent and integrated directly into standard Uniswap swaps.
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+**Resilience**: As long as arbitrage activity exists, the system sustains itself.
