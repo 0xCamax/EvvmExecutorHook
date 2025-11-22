@@ -53,30 +53,19 @@ interface IEvvm {
 
     fallback() external;
 
-    function _setupNameServiceAndTreasuryAddress(
-        address _nameServiceAddress,
-        address _treasuryAddress
-    ) external;
+    function _setupNameServiceAndTreasuryAddress(address _nameServiceAddress, address _treasuryAddress) external;
 
     function acceptAdmin() external;
 
     function acceptImplementation() external;
 
-    function addAmountToUser(
-        address user,
-        address token,
-        uint256 amount
-    ) external;
+    function addAmountToUser(address user, address token, uint256 amount) external;
 
     function addBalance(address user, address token, uint256 quantity) external;
 
     function caPay(address to, address token, uint256 amount) external;
 
-    function disperseCaPay(
-        EvvmStructs.DisperseCaPayMetadata[] memory toData,
-        address token,
-        uint256 amount
-    ) external;
+    function disperseCaPay(EvvmStructs.DisperseCaPayMetadata[] memory toData, address token, uint256 amount) external;
 
     function dispersePay(
         address from,
@@ -90,10 +79,7 @@ interface IEvvm {
         bytes memory signature
     ) external;
 
-    function getBalance(
-        address user,
-        address token
-    ) external view returns (uint256);
+    function getBalance(address user, address token) external view returns (uint256);
 
     function getCurrentAdmin() external view returns (address);
 
@@ -103,25 +89,15 @@ interface IEvvm {
 
     function getEvvmID() external view returns (uint256);
 
-    function getEvvmMetadata()
-        external
-        view
-        returns (EvvmStructs.EvvmMetadata memory);
+    function getEvvmMetadata() external view returns (EvvmStructs.EvvmMetadata memory);
 
-    function getIfUsedAsyncNonce(
-        address user,
-        uint256 nonce
-    ) external view returns (bool);
+    function getIfUsedAsyncNonce(address user, uint256 nonce) external view returns (bool);
 
     function getNameServiceAddress() external view returns (address);
 
-    function getNextCurrentSyncNonce(
-        address user
-    ) external view returns (uint256);
+    function getNextCurrentSyncNonce(address user) external view returns (uint256);
 
-    function getNextFisherDepositNonce(
-        address user
-    ) external view returns (uint256);
+    function getNextFisherDepositNonce(address user) external view returns (uint256);
 
     function getPrincipalTokenTotalSupply() external view returns (uint256);
 
@@ -139,10 +115,7 @@ interface IEvvm {
 
     function getWhitelistTokenToBeAdded() external view returns (address);
 
-    function getWhitelistTokenToBeAddedDateToSet()
-        external
-        view
-        returns (uint256);
+    function getWhitelistTokenToBeAddedDateToSet() external view returns (uint256);
 
     function isAddressStaker(address user) external view returns (bool);
 
@@ -159,15 +132,9 @@ interface IEvvm {
         bytes memory signature
     ) external;
 
-    function payMultiple(
-        EvvmStructs.PayData[] memory payData
-    )
+    function payMultiple(EvvmStructs.PayData[] memory payData)
         external
-        returns (
-            uint256 successfulTransactions,
-            uint256 failedTransactions,
-            bool[] memory results
-        );
+        returns (uint256 successfulTransactions, uint256 failedTransactions, bool[] memory results);
 
     function pointStaker(address user, bytes1 answer) external;
 
@@ -181,11 +148,7 @@ interface IEvvm {
 
     function rejectUpgrade() external;
 
-    function removeAmountFromUser(
-        address user,
-        address token,
-        uint256 amount
-    ) external;
+    function removeAmountFromUser(address user, address token, uint256 amount) external;
 
     function setEvvmID(uint256 newEvvmID) external;
 

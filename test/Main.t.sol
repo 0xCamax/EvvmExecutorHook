@@ -5,17 +5,9 @@ import {Test, console} from "forge-std/Test.sol";
 import {EvvmExecutorHook} from "../src/EvvmExecutorHook.sol";
 
 contract Main is Test {
+    function setUp() public {}
 
+    function test_Increment() public {}
 
-    function setUp() public {
-
-    }
-
-    function test_Increment() public {
-
-    }
-
-    function testFuzz_SetNumber(uint256 x) public {
-
-    }
+    function testFuzz_SetNumber(uint256 x) public {}
 }

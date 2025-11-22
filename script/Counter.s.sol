@@ -5,14 +5,10 @@ import {Script, console} from "forge-std/Script.sol";
 import {EvvmExecutorHook} from "../src/EvvmExecutorHook.sol";
 
 contract CounterScript is Script {
-
-
     function setUp() public {}
 
     function run() public {
         vm.startBroadcast();
-
-
 
         vm.stopBroadcast();
     }
