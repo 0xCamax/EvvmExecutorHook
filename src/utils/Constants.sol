@@ -9,9 +9,10 @@ import {IUniversalRouter} from "./interfaces/IUniversalRouter.sol";
 import {IPermit2} from "@permit/interfaces/IPermit2.sol";
 import {IPositionManager} from "@uniswap/v4-periphery/src/interfaces/IPositionManager.sol";
 import {IEvvm} from "../interfaces/IEvvm.sol";
+import {IStaking} from "../interfaces/IStaking.sol";
 
 abstract contract ArbitrumConstants {
-    HookDeployer internal constant HOOK_DEPLOYER = HookDeployer(0x7F2A8D28Ea33Fde8c5f2F831EB779B11AB39E1d9);
+    HookDeployer public constant HOOK_DEPLOYER = HookDeployer(0x7F2A8D28Ea33Fde8c5f2F831EB779B11AB39E1d9);
     IERC20 public constant USDC = IERC20(0xaf88d065e77c8cC2239327C5EDb3A432268e5831);
     IWETH public constant WETH = IWETH(0x82aF49447D8a07e3bd95BD0d56f35241523fBab1);
     IPoolManager public constant POOL_MANAGER = IPoolManager(0x360E68faCcca8cA495c1B759Fd9EEe466db9FB32);
@@ -20,5 +21,6 @@ abstract contract ArbitrumConstants {
     IPositionManager public constant POSITION_MANAGER = IPositionManager(0xd88F38F930b7952f2DB2432Cb002E7abbF3dD869);
     address public constant WHALE = 0x0a8494F70031623C9C0043aff4D40f334b458b11;
     address public constant DEV = 0xa14BB91455e3b70d2d4F59a0D3CbF35d939308Fc;
-    IEvvm public constant EVVM = IEvvm(address(0));
+    IEvvm public constant FloVVM = IEvvm(0xfB505AE3d70cA90c90c4dd48D0d19f3686dfD682);
+    IStaking public constant Staking = IStaking(0xff75698149268F7ae1F7eC26ab37Aa297B569530);
 }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "../src/EvvmExecutorHook.sol";
+import "../src/FloVVMExecutorHook.sol";
 import "../src/utils/Constants.sol";
 import {HookMiner} from "@uniswap/v4-periphery/src/utils/HookMiner.sol";
 import {Hooks, IHooks} from "@uniswap/v4-core/src/libraries/Hooks.sol";
@@ -21,23 +21,23 @@ contract Helpers is ArbitrumConstants {
     PoolKey basePoolKey;
     PoolId poolId;
 
-    function _deploy(address owner) internal returns (EvvmExecutorHook evvmExecutor) {
+    function _deploy(address owner) internal returns (FloVVMExecutorHook evvmExecutor) {
         uint160 flags = uint160(Hooks.BEFORE_SWAP_FLAG);
         uint160[] memory flagsArray = new uint160[](1);
 
         flagsArray[0] = Hooks.BEFORE_SWAP_FLAG;
 
-        bytes memory constructorArgs = abi.encode(address(POOL_MANAGER), owner);
-        bytes memory creationCode = type(EvvmExecutorHook).creationCode;
+        bytes memory constructorArgs = abi.encode(owner, address(POOL_MANAGER));
+        bytes memory creationCode = type(FloVVMExecutorHook).creationCode;
 
         (address hookAddress, bytes32 salt) =
             HookMiner.find(address(HOOK_DEPLOYER), flags, creationCode, constructorArgs);
 
         address hook = HOOK_DEPLOYER.safeDeploy(creationCode, constructorArgs, salt, hookAddress, flagsArray);
-        evvmExecutor = EvvmExecutorHook(payable(hook));
+        evvmExecutor = FloVVMExecutorHook(payable(hook));
     }
 
-    function _swap(uint128 amountIn, bool zeroForOne) internal {
+    function _swap(uint128 amountIn, bool zeroForOne, bytes memory hookData) internal {
         bytes memory commands = abi.encodePacked(uint8(Commands.V4_SWAP));
         bytes memory actions =
             abi.encodePacked(uint8(Actions.SWAP_EXACT_IN_SINGLE), uint8(Actions.SETTLE_ALL), uint8(Actions.TAKE_ALL));
@@ -49,7 +49,7 @@ contract Helpers is ArbitrumConstants {
                 zeroForOne: zeroForOne,
                 amountIn: amountIn,
                 amountOutMinimum: 0,
-                hookData: bytes("")
+                hookData: hookData
             })
         );
 

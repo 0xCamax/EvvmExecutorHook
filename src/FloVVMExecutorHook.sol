@@ -1,14 +1,16 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+import {Test, console} from "forge-std/Test.sol";
+
 import {BaseHook, PoolKey, SwapParams, BeforeSwapDelta, BalanceDelta} from "./contracts/BaseHook.sol";
 import {toBeforeSwapDelta} from "@uniswap/v4-core/src/types/BeforeSwapDelta.sol";
 import {EvvmRegistry} from "./contracts/EvvmRegistry.sol";
 import {EvvmStructs, IEvvm} from "./interfaces/IEvvm.sol";
 import {HookDataDecoder} from "./libraries/HookDataDecoder.sol";
 
-contract EvvmExecutorHook is BaseHook, EvvmRegistry {
-    /* 
+contract FloVVMExecutorHook is BaseHook, EvvmRegistry {
+    /*
         TODO:
         - MUST take hookData and execute to de EVVM
         - MUST donate rewards to the LPs
@@ -24,8 +26,12 @@ contract EvvmExecutorHook is BaseHook, EvvmRegistry {
         PoolKey calldata, /*key*/
         SwapParams calldata, /*params*/
         bytes calldata hookData
-    ) internal override returns (bytes4, BeforeSwapDelta, uint24) {
-        /* 
+    )
+        internal
+        override
+        returns (bytes4, BeforeSwapDelta, uint24)
+    {
+        /*
             hookData is a EVVM transaction array
             - MUST batch execute to de EVVM
             - Check if is service or normal tx
@@ -37,6 +43,8 @@ contract EvvmExecutorHook is BaseHook, EvvmRegistry {
 
         (uint256 evvmId, EvvmStructs.PayData[] memory txArray) = HookDataDecoder.decode(hookData);
         IEvvm _evvm = evvm[evvmId];
+
+        console.log("Target chain: ", address(_evvm));
 
         for (uint256 i = 0; i < txArray.length; i++) {
             (
@@ -51,6 +59,8 @@ contract EvvmExecutorHook is BaseHook, EvvmRegistry {
                 address executor,
                 bytes memory signature
             ) = HookDataDecoder.getParams(txArray[i]);
+
+            console.log("From:", from);
 
             _evvm.pay(
                 from, to_address, to_identity, token, amount, priorityFee, nonce, priorityFlag, executor, signature
