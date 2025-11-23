@@ -1,8 +1,8 @@
-# Mycelium Hook Contract
+# FlowVVM Hook Contract
 
 ## Overview
 
-The Mycelium Hook Contract is a Uniswap V4 hook that intercepts swap transactions and channels their economic flow to power EVVM execution. Instead of creating artificial incentives, it leverages the natural and predictable behavior of arbitrage bots to sustain a virtual execution environment without burdening end users with gas costs.
+The FlowVVM Hook Contract is a Uniswap V4 hook that intercepts swap transactions and channels their economic flow to power EVVM execution. Instead of creating artificial incentives, it leverages the natural and predictable behavior of arbitrage bots to sustain a virtual execution environment without burdening end users with gas costs.
 
 ## Purpose
 
