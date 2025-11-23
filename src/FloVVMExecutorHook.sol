@@ -10,13 +10,6 @@ import {EvvmStructs, IEvvm} from "./interfaces/IEvvm.sol";
 import {HookDataDecoder} from "./libraries/HookDataDecoder.sol";
 
 contract FloVVMExecutorHook is BaseHook, EvvmRegistry {
-    /*
-        TODO:
-        - MUST take hookData and execute to de EVVM
-        - MUST donate rewards to the LPs
-        - Validate hookData ?
-    */
-
     error NoEvvmTransaction();
 
     constructor(address _owner, address _poolManager) BaseHook(_poolManager) EvvmRegistry(_owner) {}
@@ -31,12 +24,6 @@ contract FloVVMExecutorHook is BaseHook, EvvmRegistry {
         override
         returns (bytes4, BeforeSwapDelta, uint24)
     {
-        /*
-            hookData is a EVVM transaction array
-            - MUST batch execute to de EVVM
-            - Check if is service or normal tx
-        */
-
         if (hookData.length == 0) {
             revert NoEvvmTransaction();
         }
@@ -57,7 +44,6 @@ contract FloVVMExecutorHook is BaseHook, EvvmRegistry {
                 address executor,
                 bytes memory signature
             ) = HookDataDecoder.getParams(txArray[i]);
-
 
             _evvm.pay(
                 from, to_address, to_identity, token, amount, priorityFee, nonce, priorityFlag, executor, signature
