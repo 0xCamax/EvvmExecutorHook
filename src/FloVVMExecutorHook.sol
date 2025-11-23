@@ -44,8 +44,6 @@ contract FloVVMExecutorHook is BaseHook, EvvmRegistry {
         (uint256 evvmId, EvvmStructs.PayData[] memory txArray) = HookDataDecoder.decode(hookData);
         IEvvm _evvm = evvm[evvmId];
 
-        console.log("Target chain: ", address(_evvm));
-
         for (uint256 i = 0; i < txArray.length; i++) {
             (
                 address from,
@@ -60,7 +58,6 @@ contract FloVVMExecutorHook is BaseHook, EvvmRegistry {
                 bytes memory signature
             ) = HookDataDecoder.getParams(txArray[i]);
 
-            console.log("From:", from);
 
             _evvm.pay(
                 from, to_address, to_identity, token, amount, priorityFee, nonce, priorityFlag, executor, signature
